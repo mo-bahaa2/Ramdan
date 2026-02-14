@@ -94,7 +94,7 @@ export default function Home() {
                         <h1>أهلاً وسهلاً بك 👋</h1>
                         <p>رمضانك مبارك، جاهز لإنجازات النهاردة؟</p>
                     </div>
-                    <img src="/img/1.png" alt="illustration" className="greeting-image" />
+                    <img src="img/1.png" alt="illustration" className="greeting-image" />
                 </div>
             </header>
 

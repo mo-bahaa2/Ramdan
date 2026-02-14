@@ -3,7 +3,7 @@ import { useMode } from '../contexts/ModeContext'
 import ModeSwitch from './ModeSwitch'
 
 export default function Sidebar({ active, onChange }) {
-    const { isKidsMode } = useMode()
+    const { isKidsMode, requestUnlock } = useMode()
     const [menuOpen, setMenuOpen] = useState(false)
 
     const adultNav = [
@@ -64,6 +64,17 @@ export default function Sidebar({ active, onChange }) {
                         <span className="nav-text">{item.label.split(' ').slice(1).join(' ')}</span>
                     </button>
                 ))}
+
+                {isKidsMode && (
+                    <button
+                        className="bottom-nav-item exit-kids-btn"
+                        onClick={requestUnlock}
+                        title="خروج من وضع الأطفال"
+                    >
+                        <span className="nav-emoji">🔓</span>
+                        <span className="nav-text">وضع الكبار</span>
+                    </button>
+                )}
 
                 {/* Hamburger Menu Button */}
                 {secondaryItems.length > 0 && (
