@@ -1,0 +1,330 @@
+:root {
+  --bg: #0f0817;
+  --card: rgba(255, 255, 255, 0.05);
+  --gold: #ffcc00;
+  --accent: #9d4edd;
+  --text: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Cairo", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background: rgba(15, 8, 23, 0.8);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.logo {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.nav-item {
+  background: none;
+  border: none;
+  color: #888;
+  padding: 15px 20px;
+  text-align: right;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: 0.3s;
+  margin-bottom: 10px;
+}
+
+.nav-item.active,
+.nav-item:hover {
+  background: var(--card);
+  color: var(--gold);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+.top-bar {
+  margin-bottom: 40px;
+}
+.greeting-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.greeting-text {
+  flex: 1;
+}
+.top-bar h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+.greeting-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 2px solid var(--gold);
+  flex-shrink: 0;
+}
+
+.page-section {
+  display: none;
+  animation: slideUp 0.5s ease forwards;
+}
+.page-section.active {
+  display: block;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.quick-stats {
+  margin-bottom: 40px;
+}
+
+.stat-box {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.next-prayer-box {
+  border-left: 5px solid var(--gold);
+}
+
+.prayer-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 10px 0;
+}
+
+.prayer-remaining {
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+.card {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 0.3s;
+  text-align: center;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--gold);
+}
+
+/* Card thumbnail + button */
+.card-thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 12px;
+}
+.card h3 {
+  margin: 8px 0;
+  font-size: 1.1rem;
+}
+.watch-btn {
+  background: var(--gold);
+  color: #000;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.12s;
+}
+.watch-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* Habit Tracker (نور يومك) */
+.habits-grid {
+  display: grid;
+  gap: 15px;
+}
+.habit-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.habit-card.done {
+  background: rgba(255, 204, 0, 0.1);
+  border-color: var(--gold);
+}
+
+.lantern-icon {
+  font-size: 1.5rem;
+  filter: grayscale(1);
+  transition: 0.3s;
+}
+.done .lantern-icon {
+  filter: grayscale(0) drop-shadow(0 0 10px var(--gold));
+}
+
+/* Prayer Times */
+.prayer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+.prayer-box {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--accent);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-body {
+  width: 90%;
+  max-width: 1000px;
+}
+.video-wrapper {
+  aspect-ratio: 16/9;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 4px solid var(--gold);
+}
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.episodes-tray {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+.episode-btn {
+  background: var(--card);
+  padding: 10px 20px;
+  border-radius: 10px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .greeting-container {
+    gap: 20px;
+  }
+  .greeting-image {
+    width: 150px;
+    height: 150px;
+  }
+  .top-bar h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+    padding-bottom: 70px;
+  }
+  .sidebar {
+    display: none !important;
+  }
+  .nav-item {
+    white-space: nowrap;
+    padding: 10px;
+  }
+  .greeting-container {
+    gap: 15px;
+  }
+  .greeting-image {
+    width: 110px;
+    height: 110px;
+  }
+  .top-bar h1 {
+    font-size: 1.6rem;
+  }
+  .top-bar p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    display: none !important;
+  }
+  .greeting-container {
+    gap: 12px;
+  }
+  .greeting-image {
+    width: 90px;
+    height: 90px;
+  }
+  .top-bar h1 {
+    font-size: 1.3rem;
+  }
+  .top-bar p {
+    font-size: 0.85rem;
+  }
+}

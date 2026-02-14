@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>رمضان كريم🌙</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/img/mylogo.png" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>رمضان كريم🌙</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="./img/mylogo.png" />
+  </head>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <!-- <div class="logo">🌙</div> -->
+        <nav>
+          <button onclick="showSection('home')" class="nav-item active">
+            🏠 الرئيسية
+          </button>
+          <button onclick="showSection('videos')" class="nav-item">
+            🎬 المسلسلات
+          </button>
+          <button onclick="showSection('prayers')" class="nav-item">
+            🕌 مواقيت الصلاة
+          </button>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="greeting-container">
+            <div class="greeting-text">
+              <h1>أهلاً وسهلاً بك 👋</h1>
+              <p>رمضانك مبارك، جاهز لإنجازات النهاردة؟</p>
+            </div>
+            <img
+              src="img/1.png"
+              alt="illustration"
+              class="greeting-image"
+              id="greeting-image"
+            />
+          </div>
+        </header>
+
+        <section id="home" class="page-section active">
+          <div class="welcome-card">
+            <h2>"اللهم بلّغنا رمضان وأنت راضٍ عنا"</h2>
+          </div>
+          <div class="quick-stats">
+            <div class="stat-box next-prayer-box" id="next-prayer-card">
+              <span>الصلاة القادمة</span>
+              <h3 id="next-prayer-name">جاري التحميل...</h3>
+              <p class="prayer-time" id="next-prayer-time"></p>
+              <p class="prayer-remaining" id="next-prayer-remaining"></p>
+            </div>
+          </div>
+          <div class="section-title">✨ نور يومك</div>
+          <div class="habits-grid" id="habit-tracker-container"></div>
+        </section>
+
+        <section id="videos" class="page-section">
+          <div class="section-title">✨ أرشيف الذكريات</div>
+          <div id="series-grid" class="grid-layout"></div>
+        </section>
+
+        <section id="prayers" class="page-section">
+          <div class="section-title">🕌 مواقيت الصلاة (القاهرة)</div>
+          <div class="prayer-grid" id="prayer-times-container"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="video-modal" class="modal">
+      <div class="modal-body">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div class="video-wrapper">
+          <iframe
+            id="youtube-iframe"
+            src=""
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div id="episodes-tray" class="episodes-tray"></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
