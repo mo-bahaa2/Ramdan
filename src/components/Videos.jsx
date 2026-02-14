@@ -61,9 +61,18 @@ export default function Videos() {
                             <iframe id="youtube-iframe" src={videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : ''} frameBorder="0" allowFullScreen></iframe>
                         </div>
                         <div id="episodes-tray" className="episodes-tray">
-                            {episodes.map((item, idx) => (
-                                <div key={idx} className="episode-btn" onClick={() => playVideo(item.snippet.resourceId.videoId)}>حلقة {idx + 1}</div>
-                            ))}
+                            {episodes.map((item, idx) => {
+                                const isCurrent = videoId === item.snippet.resourceId.videoId;
+                                return (
+                                    <div
+                                        key={idx}
+                                        className={`episode-btn ${isCurrent ? 'active' : ''}`}
+                                        onClick={() => playVideo(item.snippet.resourceId.videoId)}
+                                    >
+                                        حلقة {idx + 1}
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

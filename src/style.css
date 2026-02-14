@@ -43,11 +43,9 @@ body {
 }
 
 html.mode-kids .sidebar {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 157, 0.3),
-    rgba(255, 23, 68, 0.3)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 107, 157, 0.3),
+      rgba(255, 23, 68, 0.3));
 }
 
 .desktop-sidebar {
@@ -64,9 +62,9 @@ html.mode-kids .sidebar {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  z-index: 100;
+  z-index: 1000;
   padding: 8px 0;
-  height: 70px;
+  height: 75px;
 }
 
 .nav-item {
@@ -109,17 +107,40 @@ html.mode-kids .sidebar {
   color: var(--gold);
 }
 
+.bottom-nav-item.active .nav-text {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.active-indicator {
+  position: absolute;
+  bottom: 0px;
+  width: 20px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--gold);
+  animation: slideUp 0.3s ease;
+}
+
 .nav-emoji {
   font-size: 1.5rem;
   display: block;
+  transition: transform 0.3s ease;
+}
+
+.bottom-nav-item.active .nav-emoji {
+  transform: translateY(-2px);
 }
 
 .nav-text {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 60px;
+  max-width: 80px;
+  color: #888;
+  transition: 0.3s;
 }
 
 .hamburger-btn {
@@ -128,9 +149,17 @@ html.mode-kids .sidebar {
   border: none;
   color: #666;
   cursor: pointer;
-  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   transition: 0.3s;
   position: relative;
+}
+
+.hamburger-icon {
+  font-size: 1.5rem;
 }
 
 .hamburger-btn.active {
@@ -139,45 +168,125 @@ html.mode-kids .sidebar {
 
 .dropdown-menu {
   position: absolute;
-  bottom: 70px;
-  right: 0;
+  bottom: 80px;
+  right: 15px;
+  left: 15px;
   background: rgba(15, 8, 23, 0.98);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  min-width: 200px;
-  border-radius: 12px 12px 0 0;
-  padding: 15px 0;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 20px;
   z-index: 101;
-  max-height: 60vh;
+  max-height: 75vh;
   overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.dropdown-header {
-  padding: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 10px;
+.menu-section {
+  margin-bottom: 25px;
+}
+
+.section-title {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  padding-right: 10px;
+}
+
+.mode-switcher-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.mode-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.mode-label-text {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--text);
+}
+
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .dropdown-item {
   width: 100%;
-  background: none;
-  border: none;
-  color: #888;
-  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #ccc;
+  padding: 15px 20px;
   text-align: right;
-  font-size: 0.9rem;
+  font-size: 1rem;
   cursor: pointer;
+  border-radius: 15px;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-emoji {
+  font-size: 1.3rem;
 }
 
 .dropdown-item:hover,
 .dropdown-item.active {
   background: var(--card);
   color: var(--gold);
+  border-color: var(--gold);
+  transform: translateX(-5px);
+}
+
+.exit-kids-item {
+  margin-top: 10px;
+  background: rgba(255, 71, 87, 0.1);
+  border-color: rgba(255, 71, 87, 0.2);
+  color: #ff4757;
+}
+
+.exit-kids-nav-btn {
+  color: #ff4757 !important;
+}
+
+.exit-kids-nav-btn .nav-text {
+  color: #ff4757 !important;
+  font-weight: 700;
 }
 
 .menu-overlay {
-  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  z-index: 900;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .main-content {
@@ -185,14 +294,17 @@ html.mode-kids .sidebar {
   padding: 40px;
   overflow-y: auto;
 }
+
 .top-bar {
   margin-bottom: 40px;
 }
+
 .greeting-container {
   display: flex;
   align-items: center;
   gap: 30px;
 }
+
 .greeting-text {
   flex: 1;
 }
@@ -212,6 +324,7 @@ html.mode-kids .sidebar {
   font-size: 2.5rem;
   font-weight: 900;
 }
+
 .greeting-image {
   width: 200px;
   height: 200px;
@@ -288,10 +401,12 @@ html.mode-kids .sidebar {
   border-radius: 15px;
   margin-bottom: 12px;
 }
+
 .card h3 {
   margin: 8px 0;
   font-size: 1.1rem;
 }
+
 .watch-btn {
   background: var(--gold);
   color: #000;
@@ -302,6 +417,7 @@ html.mode-kids .sidebar {
   font-weight: 700;
   transition: transform 0.12s;
 }
+
 .watch-btn:hover {
   transform: translateY(-3px);
 }
@@ -310,6 +426,7 @@ html.mode-kids .sidebar {
   display: grid;
   gap: 15px;
 }
+
 .habit-card {
   background: var(--card);
   padding: 20px;
@@ -320,15 +437,18 @@ html.mode-kids .sidebar {
   cursor: pointer;
   transition: 0.3s;
 }
+
 .habit-card.done {
   background: rgba(255, 204, 0, 0.1);
   border-color: var(--gold);
 }
+
 .lantern-icon {
   font-size: 1.5rem;
   filter: grayscale(1);
   transition: 0.3s;
 }
+
 .done .lantern-icon {
   filter: grayscale(0) drop-shadow(0 0 10px var(--gold));
 }
@@ -338,6 +458,7 @@ html.mode-kids .sidebar {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 15px;
 }
+
 .prayer-box {
   background: var(--card);
   padding: 20px;
@@ -355,10 +476,12 @@ html.mode-kids .sidebar {
   align-items: center;
   justify-content: center;
 }
+
 .modal-body {
   width: 90%;
   max-width: 1000px;
 }
+
 .video-wrapper {
   aspect-ratio: 16/9;
   margin-bottom: 20px;
@@ -366,29 +489,56 @@ html.mode-kids .sidebar {
   overflow: hidden;
   border: 4px solid var(--gold);
 }
+
 .video-wrapper iframe {
   width: 100%;
   height: 100%;
 }
+
 .episodes-tray {
   display: flex;
   gap: 10px;
   overflow-x: auto;
   padding-bottom: 10px;
 }
+
 .episode-btn {
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 12px;
   white-space: nowrap;
   cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.episode-btn:hover {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+}
+
+.episode-btn.active {
+  background: var(--gold) !important;
+  color: #000 !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+}
+
 
 @keyframes slideUp {
   from {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -400,6 +550,7 @@ html.mode-kids .sidebar {
     width: 150px;
     height: 150px;
   }
+
   .top-bar h1 {
     font-size: 2rem;
   }
@@ -422,9 +573,11 @@ html.mode-kids .sidebar {
   .sidebar {
     display: none !important;
   }
+
   .main-content {
     padding: 20px;
   }
+
   .top-bar {
     margin-bottom: 25px;
   }
@@ -435,12 +588,15 @@ html.mode-kids .sidebar {
     gap: 15px;
     align-items: flex-start;
   }
+
   .greeting-text {
     flex: 1;
   }
+
   .top-bar h1 {
     font-size: 1.6rem;
   }
+
   .greeting-image {
     width: 100px;
     height: 100px;
@@ -452,6 +608,7 @@ html.mode-kids .sidebar {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
   }
+
   .stat-box {
     padding: 20px;
   }
@@ -508,15 +665,19 @@ html.mode-kids .sidebar {
   .grid-layout {
     grid-template-columns: 1fr;
   }
+
   .card {
     padding: 15px;
   }
+
   .stat-box {
     padding: 15px;
   }
+
   .prayer-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .habit-card {
     padding: 15px;
   }
@@ -722,13 +883,16 @@ html.mode-kids .mode-suggestion span {
 }
 
 @keyframes shake {
+
   0%,
   100% {
     transform: translateX(0);
   }
+
   25% {
     transform: translateX(-10px);
   }
+
   75% {
     transform: translateX(10px);
   }
@@ -739,6 +903,7 @@ html.mode-kids .mode-suggestion span {
     opacity: 0;
     transform: scale(0.8);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -902,8 +1067,7 @@ html.mode-kids .nav-item.active {
 }
 
 .habit-card.completed .habit-lantern {
-  filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.6)) grayscale(0)
-    brightness(1);
+  filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.6)) grayscale(0) brightness(1);
   background: rgba(255, 204, 0, 0.2);
   transform: scale(1.1);
 }
@@ -1002,6 +1166,7 @@ html.mode-kids .nav-item.active {
     opacity: 0;
     transform: translateX(-50%) translateY(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
@@ -1025,11 +1190,9 @@ html.mode-kids .nav-item.active {
 }
 
 .challenge-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 157, 0.2),
-    rgba(255, 23, 68, 0.2)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 107, 157, 0.2),
+      rgba(255, 23, 68, 0.2));
   padding: 30px;
   border-radius: 25px;
   text-align: center;
@@ -1046,11 +1209,9 @@ html.mode-kids .nav-item.active {
 
 .challenge-card:hover {
   transform: translateY(-8px);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 157, 0.4),
-    rgba(255, 23, 68, 0.4)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 107, 157, 0.4),
+      rgba(255, 23, 68, 0.4));
   border-color: #ff1744;
   box-shadow: 0 15px 35px rgba(255, 23, 68, 0.2);
 }
@@ -1158,11 +1319,9 @@ html.mode-kids .nav-item.active {
 }
 
 .motivational-box {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 157, 0.2),
-    rgba(255, 23, 68, 0.2)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 107, 157, 0.2),
+      rgba(255, 23, 68, 0.2));
   padding: 30px;
   border-radius: 20px;
   border-left: 5px solid #ff1744;
@@ -1290,6 +1449,7 @@ html.mode-kids .nav-item.active {
     width: 150px;
     height: 150px;
   }
+
   .top-bar h1 {
     font-size: 2rem;
   }
@@ -1638,11 +1798,9 @@ html.mode-kids .nav-item.active {
 }
 
 .adhkar-detail-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 204, 0, 0.05),
-    rgba(157, 78, 221, 0.05)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 204, 0, 0.05),
+      rgba(157, 78, 221, 0.05));
   border: 2px solid rgba(255, 204, 0, 0.2);
   border-radius: 15px;
   padding: 30px;
@@ -2053,14 +2211,13 @@ html.mode-kids .nav-item.active {
   font-weight: 700;
   margin-left: 10px;
 }
+
 /* ============= REMINDERS WARNING BANNER ============= */
 
 .warning-banner {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 204, 0, 0.15),
-    rgba(255, 204, 0, 0.05)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 204, 0, 0.15),
+      rgba(255, 204, 0, 0.05));
   border: 2px solid rgba(255, 204, 0, 0.4);
   border-radius: 12px;
   padding: 15px 20px;
@@ -2075,6 +2232,7 @@ html.mode-kids .nav-item.active {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
