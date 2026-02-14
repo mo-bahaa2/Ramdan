@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { fetchPlaylistItems } from '../api'
 
 const seriesData = [
-    { title: "قصص الإنسان في القرآن", id: "PLJ0WU3XQoz49XWayvM7-m1N5ZgNNHL7fK", thumb: "img/el_ensan.jpg" },
-    { title: "قصص النساء في القرآن", id: "PLJ0WU3XQoz4-x5FPOHh3s8nRkeal-4ED7", thumb: "img/el_nisaa.png" },
-    { title: "قصص العجائب في القرآن", id: "PLJ0WU3XQoz4_vDPS0Xlaf3E2LgUz7pJsp&si=b8mvAS2jmPQaz-C_", thumb: "img/عجائب.png" },
-    { title: "قصص الآيات في القرآن", id: "PLJ0WU3XQoz4-x5FPOHh3s8nRkeal-4ED7&si=3xaqp7VsydAFJwHu", thumb: "img/hqdefault.jpg" },
-    { title: "بكار", id: "PLckmAn-2SivHwpWY7nHiQxxs39W0KEigu", thumb: "img/bakar.png" },
-    { title: "بوجي وطمطم", id: "PL678DQfcGwUyCzPBZbbmaPqPO9sGNpA3-", thumb: "img/bogy.png" },
-    { title: "ظاظا وجرجير", id: "PL678DQfcGwUz0Lq4RdaQoO-m9t6A3QWFv", thumb: "img/222.png" }
+    { title: "قصص الإنسان في القرآن", id: "PLJ0WU3XQoz49XWayvM7-m1N5ZgNNHL7fK", thumb: "/img/el_ensan.jpg" },
+    { title: "قصص النساء في القرآن", id: "PLJ0WU3XQoz4-x5FPOHh3s8nRkeal-4ED7", thumb: "/img/el_nisaa.png" },
+    { title: "قصص العجائب في القرآن", id: "PLJ0WU3XQoz4_vDPS0Xlaf3E2LgUz7pJsp&si=b8mvAS2jmPQaz-C_", thumb: "/img/عجائب.png" },
+    { title: "قصص الآيات في القرآن", id: "PLJ0WU3XQoz4-x5FPOHh3s8nRkeal-4ED7&si=3xaqp7VsydAFJwHu", thumb: "/img/hqdefault.jpg" },
+    { title: "بكار", id: "PLckmAn-2SivHwpWY7nHiQxxs39W0KEigu", thumb: "/img/bakar.png" },
+    { title: "بوجي وطمطم", id: "PL678DQfcGwUyCzPBZbbmaPqPO9sGNpA3-", thumb: "/img/bogy.png" },
+    { title: "ظاظا وجرجير", id: "PL678DQfcGwUz0Lq4RdaQoO-m9t6A3QWFv", thumb: "/img/222.png" }
 ]
 
 export default function Videos() {

@@ -20,7 +20,7 @@ const radios = [
     { "id": 16, "name": "إذاعة نبيل الرفاعي", "url": "https://backup.qurango.net/radio/nabil_al_rifay", "img": "https://i1.sndcdn.com/artworks-000161140408-wh6nhw-t200x200.jpg" },
     { "id": 17, "name": "إذاعة هيثم الجدعاني", "url": "https://backup.qurango.net/radio/hitham_aljadani", "img": "https://ar.islamway.net/uploads/authors/3948.jpg" },
     { "id": 18, "name": "إذاعة ياسر الدوسري", "url": "https://backup.qurango.net/radio/yasser_aldosari", "img": "https://www.almowaten.net/wp-content/uploads/2022/06/%D9%8A%D8%A7%D8%B3%D8%B1-%D8%A7%D9%84%D8%AF%D9%88%D8%B3%D8%B1%D9%8A.jpg" },
-    { "id": 19, "name": "إذاعة القرأن الكريم من القاهرة", "url": "https://n0e.radiojar.com/8s5u5tpdtwzuv?rj-ttl=5&rj-tok=AAABjW7yROAA0TUU8cXhXIAi6g", "img": "img/download.png" },
+    { "id": 19, "name": "إذاعة القرأن الكريم من القاهرة", "url": "https://n0e.radiojar.com/8s5u5tpdtwzuv?rj-ttl=5&rj-tok=AAABjW7yROAA0TUU8cXhXIAi6g", "img": "/img/download.png" },
     { "id": 20, "name": "إذاعة السنة النبوية", "url": "https://n01.radiojar.com/x0vs2vzy6k0uv?rj-ttl=5&rj-tok=AAABjW751GcA4NgCI8-5DCpCHQ", "img": "https://i.pinimg.com/564x/55/16/ab/5516abd3744c3d0b0a7b28bedd5474c0.jpg" },
     { "id": 21, "name": "إذاعة تلاوات خاشعة", "url": "https://backup.qurango.net/radio/salma", "img": "https://pbs.twimg.com/profile_images/1396812808659079169/5ft2haLD_400x400.jpg" },
     { "id": 22, "name": "إذاعة الرقية الشرعية", "url": "https://backup.qurango.net/radio/roqiah", "img": "https://i1.sndcdn.com/artworks-zygACgAd2NKwuohE-UF2Piw-t500x500.jpg" },
