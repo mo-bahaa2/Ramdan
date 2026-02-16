@@ -113,7 +113,7 @@ export default function AdultHome() {
                         <h2>الصلاة القادمة</h2>
                         <div className="prayer-name">{nextPrayer.name}</div>
                         <div className="prayer-time">{nextPrayer.time12}</div>
-                        <div className="prayer-remaining">بقي: {nextPrayer.remaining}</div>
+                        <div className="prayer-remaining">باقي: {nextPrayer.remaining}</div>
                     </div>
                 </div>
             )}

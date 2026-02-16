@@ -56,13 +56,25 @@ export default function Radio() {
                 {list.map(r => (
                     <div
                         key={r.id}
-                        className={`card ${currentRadio && currentRadio.id === r.id ? 'playing' : ''}`}
-                        onClick={() => handleRadioClick(r)}
+                        className={`card radio-card ${currentRadio && currentRadio.id === r.id ? 'playing' : ''}`}
                     >
                         <img src={r.img} alt={r.name} className="card-thumb" />
                         <h3>{r.name}</h3>
+
+                        <div className="radio-controls">
+                            {currentRadio && currentRadio.id === r.id ? (
+                                <button className="btn-stop-radio" onClick={() => stopRadio()}>
+                                    ⏹️ إيقاف
+                                </button>
+                            ) : (
+                                <button className="btn-play-radio" onClick={() => playRadio(r)}>
+                                    ▶️ تشغيل
+                                </button>
+                            )}
+                        </div>
+
                         {currentRadio && currentRadio.id === r.id && (
-                            <div className="watch-btn">🔊 يستمع الآن</div>
+                            <div className="status-badge">🔊 يستمع الآن</div>
                         )}
                     </div>
                 ))}

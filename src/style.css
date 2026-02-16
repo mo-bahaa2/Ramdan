@@ -1806,6 +1806,83 @@ html.mode-kids .nav-item.active {
   transform: translateY(-3px);
 }
 
+.card.radio-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
+}
+
+.radio-controls {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-play-radio,
+.btn-stop-radio {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.btn-play-radio {
+  background: var(--gold);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2);
+}
+
+.btn-play-radio:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 204, 0, 0.3);
+}
+
+.btn-stop-radio {
+  background: rgba(255, 71, 87, 0.1);
+  color: #ff4757;
+  border: 1px solid rgba(255, 71, 87, 0.3);
+}
+
+.btn-stop-radio:hover {
+  background: rgba(255, 71, 87, 0.2);
+  transform: scale(0.98);
+}
+
+.status-badge {
+  margin-top: 15px;
+  background: rgba(157, 78, 221, 0.15);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}
+
 .prayer-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
