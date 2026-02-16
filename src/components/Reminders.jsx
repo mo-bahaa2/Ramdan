@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 export default function Reminders() {
     const [subscriptions, setSubscriptions] = useState({})
     const [saveStatus, setSaveStatus] = useState('')
+    const audioRef = useRef(null)
+    const [isPlaying, setIsPlaying] = useState(false)
+    const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
+        const saved = localStorage.getItem('reminders_sound_enabled')
+        return saved !== null ? JSON.parse(saved) : true
+    })
     const [notificationPermission, setNotificationPermission] = useState(
         typeof Notification !== 'undefined' ? Notification.permission : 'denied'
     )
@@ -70,6 +76,61 @@ export default function Reminders() {
         localStorage.setItem('reminders_subscriptions', JSON.stringify(updated))
     }
 
+    const [lastPlayedMinute, setLastPlayedMinute] = useState('')
+
+    // تتبع الوقت لتنبيهات الـ Foreground
+    useEffect(() => {
+        const checkReminders = () => {
+            const now = new Date()
+            const currentMins = now.getHours() * 60 + now.getMinutes()
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+
+            if (timeStr === lastPlayedMinute) return
+
+            reminderOptions.forEach(reminder => {
+                if (isSoundEnabled && subscriptions[reminder.id] && reminder.time === timeStr) {
+                    playNotificationSound()
+                    setLastPlayedMinute(timeStr)
+                }
+            })
+        }
+
+        const interval = setInterval(checkReminders, 30000) // فحص كل 30 ثانية
+        return () => clearInterval(interval)
+    }, [subscriptions, reminderOptions, lastPlayedMinute, isSoundEnabled])
+
+    const playNotificationSound = () => {
+        if (audioRef.current) {
+            audioRef.current.pause()
+            audioRef.current.currentTime = 0
+        }
+
+        const audio = new Audio('/audio/notification.mp3')
+        audioRef.current = audio
+        setIsPlaying(true)
+
+        audio.play().catch(e => {
+            console.log('🔊 Sound blocked by browser:', e)
+            setIsPlaying(false)
+        })
+
+        audio.onended = () => setIsPlaying(false)
+    }
+
+    const stopSound = () => {
+        if (audioRef.current) {
+            audioRef.current.pause()
+            audioRef.current.currentTime = 0
+            setIsPlaying(false)
+        }
+    }
+
+    const testSound = () => {
+        playNotificationSound()
+        setSaveStatus('🎵 جارٍ تجربة صوت التنبيه...')
+        setTimeout(() => setSaveStatus(''), 3000)
+    }
+
     const handleSave = () => {
         const activeReminders = Object.keys(subscriptions)
             .filter(k => subscriptions[k])
@@ -82,6 +143,7 @@ export default function Reminders() {
         }
 
         localStorage.setItem('reminders_subscriptions', JSON.stringify(subscriptions))
+        localStorage.setItem('reminders_sound_enabled', JSON.stringify(isSoundEnabled))
 
         // إرسال التذكيرات للـ Service Worker
         if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
@@ -91,7 +153,7 @@ export default function Reminders() {
             })
             setSaveStatus('✅ تم تفعيل التذكيرات! ستصل لك الإشعارات كل يوم')
         } else {
-            setSaveStatus('⚠️ Service Worker لم يتم تفعيله بعد، حاول تحديث الصفحة')
+            setSaveStatus('⚠️ نظام التذكيرات لم يكتمل بعد، حاول تحديث الصفحة')
         }
 
         setTimeout(() => setSaveStatus(''), 4000)
@@ -149,10 +211,31 @@ export default function Reminders() {
                 </div>
 
                 <div className="contact-section">
-                    <h3>🔔 التذكيرات</h3>
+                    <h3>🔔 الإشعارات والصوت</h3>
                     <p style={{ color: '#aaa', marginBottom: '15px', fontSize: '0.9rem' }}>
-                        التذكيرات ستصل لك حتى لو كان المتصفح مغلقاً عن طريق إشعارات النظام
+                        التذكيرات ستصل لك حتى لو أغلق الموقع، ومع صوت تنبيه مخصص
                     </p>
+
+                    <div style={{
+                        marginBottom: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        padding: '12px 15px',
+                        borderRadius: '12px'
+                    }}>
+                        <input
+                            type="checkbox"
+                            id="sound-toggle"
+                            checked={isSoundEnabled}
+                            onChange={(e) => setIsSoundEnabled(e.target.checked)}
+                            style={{ width: '22px', height: '22px', cursor: 'pointer' }}
+                        />
+                        <label htmlFor="sound-toggle" style={{ cursor: 'pointer', fontSize: '1rem', fontWeight: '600', color: '#fff' }}>
+                            🔈 تشغيل صوت التنبيه عند الموعد
+                        </label>
+                    </div>
 
                     <div className="button-group">
                         <button
@@ -172,6 +255,37 @@ export default function Reminders() {
                         >
                             {notificationPermission === 'granted' ? '✅ الإشعارات مفعلة' : '🔔 السماح بالإشعارات'}
                         </button>
+                        {!isPlaying ? (
+                            <button
+                                onClick={testSound}
+                                className="btn-test-sound"
+                                style={{
+                                    background: 'rgba(255, 255, 255, 0.1)',
+                                    color: 'white',
+                                    flex: '1',
+                                    minWidth: '120px'
+                                }}
+                            >
+                                🎵 تشغيل الصوت
+                            </button>
+                        ) : (
+                            <button
+                                onClick={stopSound}
+                                className="btn-stop-sound"
+                                style={{
+                                    background: '#ff4757',
+                                    color: 'white',
+                                    flex: '1',
+                                    minWidth: '120px',
+                                    border: 'none',
+                                    borderRadius: '15px',
+                                    cursor: 'pointer',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                ⏹️ إيقاف الصوت
+                            </button>
+                        )}
                     </div>
 
                     {saveStatus && <p className="save-status">{saveStatus}</p>}

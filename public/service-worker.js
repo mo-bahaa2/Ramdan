@@ -50,7 +50,10 @@ function scheduleNotification(reminder, delay, dailyRepeat = null) {
             icon: '/img/1.png',
             badge: '/img/1.png',
             tag: reminder.id,
-            requireInteraction: true, // لا تختفي بشكل آلي
+            requireInteraction: true,
+            silent: false, // Ensure it's not silent
+            sound: '/audio/notification.mp3', // Path to the sound file
+            vibrate: [200, 100, 200], // Vibration pattern
             actions: [
                 { action: 'open', title: 'فتح التطبيق' },
                 { action: 'dismiss', title: 'إغلاق' }

@@ -18,7 +18,6 @@ export default function Sidebar({ active, onChange }) {
     const kidsNav = [
         { id: 'home', label: '🏠 الرئيسية' },
         { id: 'videos', label: '🎬 كرتون رمضان' },
-        { id: 'prayers', label: '🎮 تحديات' },
     ]
 
     const navItems = isKidsMode ? kidsNav : adultNav
