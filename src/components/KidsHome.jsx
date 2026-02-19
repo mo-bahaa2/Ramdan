@@ -1,62 +1,141 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { fetchPlaylistItems } from '../api'
 
-const kidsRewards = [
-    { stars: 5, reward: '🎬 فيلم رمضاني', icon: '🎬' },
-    { stars: 10, reward: '🍪 حلويات', icon: '🍪' },
-    { stars: 15, reward: '🎮 لعبة جديدة', icon: '🎮' },
-    { stars: 20, reward: '🎁 هدية كبيرة', icon: '🎁' }
+const seriesData = [
+    { title: "قصص العجائب في القرآن", id: "PLJ0WU3XQoz4_vDPS0Xlaf3E2LgUz7pJsp&si=b8mvAS2jmPQaz-C_", thumb: "/img/عجائب.png" },
+    { title: "قصص النساء في القرآن", id: "PLJ0WU3XQoz4-x5FPOHh3s8nRkeal-4ED7", thumb: "/img/el_nisaa.png" },
+    { title: "قصص الإنسان في القرآن", id: "PLJ0WU3XQoz49XWayvM7-m1N5ZgNNHL7fK", thumb: "/img/el_ensan.jpg" },
+    { title: "قصص الآيات في القرآن", id: "PLJ0WU3XQoz4-x5FPOHh3s8nRkeal-4ED7&si=3xaqp7VsydAFJwHu", thumb: "/img/hqdefault.jpg" },
+    { title: "بكار", id: "PLckmAn-2SivHwpWY7nHiQxxs39W0KEigu", thumb: "/img/bakar.png" },
+    { title: "بوجي وطمطم", id: "PL678DQfcGwUyCzPBZbbmaPqPO9sGNpA3-", thumb: "/img/bogy.png" },
+    { title: "ظاظا وجرجير", id: "PL678DQfcGwUz0Lq4RdaQoO-m9t6A3QWFv", thumb: "/img/222.png" },
+    { title: "الفاوكه", id: "PL7pYJ_OPjX1H8KhI-X-Gse3fgtrwfQnV0&si=0uc4egjoHQDLnc5P", thumb: "/img/كرتون_الفواكه.jpg" }
 ]
 
-export default function KidsHome({ onNavigate }) {
-    const [stars, setStars] = useState(0)
+const kidsTips = [
+    "ابتسم في وجه أصحابك.. الابتسامة صدقة وتخلي كل الناس تحبك! 😊",
+    "ساعد ماما وبابا في تحضير الفطار أو السحور، هيفرحوا بيك جداً! 🥗",
+    "قبل ما تبدأ تاكل، قول 'بسم الله' عشان البركة تزيد في أكلك. 🍽️",
+    "حافظ على نظافة غرفتك ومكانك.. البطل دايماً شاطر ومنظم. ✨",
+    "صلّي على النبي كل ما تفتكره، عشان يومك يكون كله بركة وحسنات. ❤️",
+    "لو شفت حد محتاج مساعدة، بادر وساعده.. الخير بيرجع لصاحبه دايماً. 🤝",
+    "ادعي لبابا وماما النهاردة من قلبك، هما أكتر ناس بيحبوك في الدنيا. 🤲",
+    "اقرأ ولو صفحة واحدة من القرآن كل يوم، القرآن بينوّر قلبك وحياتك. 📖",
+    "كلمة 'شكراً' و'لو سمحت' كلمات سحرية بتخلي الناس تحترمك وتحبك. ✨",
+    "حاول تنام بدري عشان تصحى نشيط لصلاة الفجر وتبدأ يومك ببركة. 🌅",
+    "لو غلطت، الاعتذار شجاعة.. قولي 'أنا آسف' ودايماً خلي قلبك أبيض. 🤍",
+    "الصلاة هي صلتنا بربنا.. حافظ على مواعيدها عشان تكون دايمًا قريب منه. 🕌",
+    "اتعلم معلومة جديدة النهاردة واحكيها لبابا وماما على الفطار. 💡",
+    "خليك دايماً صادق في كلامك.. الصدق هو صفة الأبطال والأقوياء. ✅",
+    "اغسل إيدك كويس بالصابون قبل وبعد الأكل عشان صحتك تفضل حديد. 🧼",
+    "شجع صحابك على فعل الخير، وكونوا دايماً قدوة لبعض في البر. ✨",
+    "قول 'الحمد لله' على كل النعم اللي عندك.. الحمد بيخلي النعم تزيد وتفضل. 🌟",
+    "كون رحيم بالحيوانات والطيور، الرفق بيهم له أجر كبير جداً عند ربنا. 🐱",
+    "لما تسمع الأذان، ردد وراه بهدوء وتركيز عشان تاخد ثواب كبير. 🕌",
+    "خليك دايماً متفائل ومبتسم.. ربنا دايماً معاك وبيحب الأشخاص المتفائلين. 🌈"
+]
 
-    useEffect(() => {
-        const storedStars = parseInt(localStorage.getItem('kids_stars') || '0')
-        setStars(storedStars)
-    }, [])
+export default function KidsHome() {
+    const [searchTerm, setSearchTerm] = useState('')
+    const [modalOpen, setModalOpen] = useState(false)
+    const [videoId, setVideoId] = useState('')
+    const [episodes, setEpisodes] = useState([])
 
-    const nextReward = kidsRewards.find(r => r.stars > stars) || kidsRewards[kidsRewards.length - 1]
-    const progress = Math.min((stars / nextReward.stars) * 100, 100)
+    // Calculate daily tip index based on date
+    const today = new Date();
+    const startOfYear = new Date(today.getFullYear(), 0, 0);
+    const diff = today - startOfYear;
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const tipIndex = dayOfYear % kidsTips.length;
+    const dailyTip = kidsTips[tipIndex];
+
+    async function openModal(playlistId) {
+        setModalOpen(true)
+        try {
+            const data = await fetchPlaylistItems(playlistId)
+            setEpisodes(data.items || [])
+            if (data.items && data.items.length) {
+                setVideoId(data.items[0].snippet.resourceId.videoId)
+            }
+        } catch (e) {
+            console.error('YouTube API Error', e)
+            setEpisodes([])
+        }
+    }
+
+    function playVideo(id) {
+        setVideoId(id)
+    }
+
+    function closeModal() {
+        setModalOpen(false)
+        setVideoId('')
+        setEpisodes([])
+    }
+
+    const filteredSeries = seriesData.filter(s =>
+        s.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
 
     return (
         <div className="kids-home-container">
-            {/* Featured Video Section */}
-            <section className="kids-featured-hero" onClick={() => onNavigate('videos')}>
-                <div className="hero-content">
-                    <span className="hero-badge">كارتون اليوم 🎬</span>
-                    <h2>مغامرات بكار 🐪</h2>
-                    <p>اتفرج على أجمل الحكايات وعيش جو رمضان</p>
-                    <button className="play-hero-btn">▶️ شاهد الآن</button>
+            <div className="kids-daily-tip">
+                <div className="tip-header">
+                    <span className="tip-icon">💡</span>
+                    <h4>نصيحة اليوم للبطل</h4>
                 </div>
-                <div className="hero-image">
-                    <img src="/img/bakar.png" alt="Bakar" />
-                </div>
-            </section>
+                <p className="tip-text">{dailyTip}</p>
+            </div>
 
-            {/* Stars Dashboard */}
-            <section className="kids-stars-dashboard">
-                <div className="stars-main">
-                    <div className="star-orb">
-                        <span className="star-icon">⭐</span>
-                        <span className="star-count">{stars}</span>
+            <div className="kids-search-container">
+                <input
+                    type="text"
+                    placeholder="ابحث عن الكرتون المفضل..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="kids-search-input"
+                />
+                <span className="search-icon">🔍</span>
+            </div>
+
+            <div className="grid-layout">
+                {filteredSeries.map(s => (
+                    <div key={s.id} className="card radio-card" onClick={() => openModal(s.id)}>
+                        <img src={s.thumb} alt={s.title} className="card-thumb" />
+                        <h3>{s.title}</h3>
+                        <div className="radio-controls">
+                            <button className="btn-play-radio" onClick={(e) => { e.stopPropagation(); openModal(s.id) }}>
+                                ▶️ شاهد الآن
+                            </button>
+                        </div>
                     </div>
-                    <div className="stars-info">
-                        <h3>أنت بطل حكايات رمضان! 🌟</h3>
-                        <p>باقي لك {nextReward.stars - stars > 0 ? nextReward.stars - stars : 0} نجوم عشان تفتح: <strong>{nextReward.reward}</strong></p>
+                ))}
+            </div>
+
+            {modalOpen && (
+                <div className="modal" style={{ display: 'flex' }}>
+                    <div className="modal-body">
+                        <span className="close-modal" onClick={closeModal} style={{ cursor: 'pointer', fontSize: 30 }}>&times;</span>
+                        <div className="video-wrapper">
+                            <iframe id="youtube-iframe" src={videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : ''} frameBorder="0" allowFullScreen></iframe>
+                        </div>
+                        <div id="episodes-tray" className="episodes-tray">
+                            {episodes.map((item, idx) => {
+                                const isCurrent = videoId === item.snippet.resourceId.videoId;
+                                return (
+                                    <div
+                                        key={idx}
+                                        className={`episode-btn ${isCurrent ? 'active' : ''}`}
+                                        onClick={() => playVideo(item.snippet.resourceId.videoId)}
+                                    >
+                                        حلقة {idx + 1}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
-
-                <div className="reward-progress-bar">
-                    <div className="progress-fill" style={{ width: `${progress}%` }}></div>
-                    <div className="gift-box-icon">🎁</div>
-                </div>
-            </section>
-
-
-            {/* Motivational Parent Section */}
-            <section className="kids-parent-msg">
-                <p>💡 "برافو يا بطل.. بابا وماما فخورين بيك جداً النهاردة!" 🌟</p>
-            </section>
+            )}
         </div>
     )
 }

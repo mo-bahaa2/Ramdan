@@ -8,7 +8,8 @@ const seriesData = [
     { title: "قصص الآيات في القرآن", id: "PLJ0WU3XQoz4-x5FPOHh3s8nRkeal-4ED7&si=3xaqp7VsydAFJwHu", thumb: "/img/hqdefault.jpg" },
     { title: "بكار", id: "PLckmAn-2SivHwpWY7nHiQxxs39W0KEigu", thumb: "/img/bakar.png" },
     { title: "بوجي وطمطم", id: "PL678DQfcGwUyCzPBZbbmaPqPO9sGNpA3-", thumb: "/img/bogy.png" },
-    { title: "ظاظا وجرجير", id: "PL678DQfcGwUz0Lq4RdaQoO-m9t6A3QWFv", thumb: "/img/222.png" }
+    { title: "ظاظا وجرجير", id: "PL678DQfcGwUz0Lq4RdaQoO-m9t6A3QWFv", thumb: "/img/222.png" },
+    { title: "الفاوكه", id: "PL7pYJ_OPjX1H8KhI-X-Gse3fgtrwfQnV0&si=0uc4egjoHQDLnc5P", thumb: "/img/كرتون_الفواكه.jpg" }
 ]
 
 export default function Videos() {

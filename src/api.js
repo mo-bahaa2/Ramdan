@@ -8,9 +8,22 @@ export async function fetchTimingsByCity(city = 'Cairo', country = 'Egypt', meth
     return res.json()
 }
 
-export async function fetchPlaylistItems(playlistId, maxResults = 15) {
+export async function fetchPlaylistItems(playlistId, all = true) {
     if (!YT_KEY) throw new Error('VITE_YT_KEY not set')
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${playlistId}&key=${YT_KEY}`
-    const res = await fetch(url)
-    return res.json()
+    let items = []
+    let nextPageToken = ''
+
+    do {
+        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${YT_KEY}${nextPageToken ? `&pageToken=${nextPageToken}` : ''}`
+        const res = await fetch(url)
+        const data = await res.json()
+
+        if (data.items) {
+            items = [...items, ...data.items]
+        }
+
+        nextPageToken = (all && data.nextPageToken) ? data.nextPageToken : null
+    } while (nextPageToken)
+
+    return { items }
 }

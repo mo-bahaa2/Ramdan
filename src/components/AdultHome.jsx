@@ -136,12 +136,12 @@ export default function AdultHome() {
                 </div>
             </section>
 
-            <section className="daily-reminder">
+            {/* <section className="daily-reminder">
                 <h2>تذكير اليوم</h2>
                 <div className="reminder-box">
                     <p>🤲 "اللهم بلغنا رمضان ولا تحرمنا من قبوله"</p>
                 </div>
-            </section>
-        </div>
+            </section> */}
+        </div> 
     )
 }
